@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - http:
+      paths:
+        - pathType: Prefix
+          path: /
+          backend:
+            service:
+              name: nextjs-svc
+              port:
+                number: 80
+        - pathType: Prefix
+          path: /api
+          backend:
+            service:
+              name: fastapi-svc
+              port:
+                number: 8000

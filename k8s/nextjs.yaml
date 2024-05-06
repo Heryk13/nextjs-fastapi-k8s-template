@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-app
+  labels:
+    app: nextjs-app
+spec:
+  selector:
+    matchLabels:
+      app: nextjs-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nextjs-app
+    spec:
+      containers:
+        - name: nextjs-app
+          image: nextjs-image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-svc
+spec:
+  selector:
+    app: nextjs-app
+  ports:
+    - name: nextjs-svc
+      port: 80
+      targetPort: 3000
+      protocol: TCP
